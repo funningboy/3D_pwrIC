@@ -1,0 +1,123 @@
+//Layer2
+module bench_1_L2 (N16_OUT, n252_OUT, n219_OUT, n265_OUT, n263_OUT, X0_OUT, X34_OUT, clk1_OUT, clk2_OUT, N332_OUT, N334_OUT, 
+                                   X1061_OUT, N331_OUT, N333_OUT, n180_OUT, n240_IN, X1061_IN, N331_IN, N333_IN, X0_IN, X34_IN, clk1_IN, clk2_IN, 
+                                   N332_IN, N334_IN, N23_IN, N24_IN, n195_IN, n272_IN);
+  input n240_IN, X1061_IN, N331_IN, N333_IN, X0_IN, X34_IN, clk1_IN, clk2_IN, N332_IN, N334_IN, N23_IN, N24_IN, n195_IN, n272_IN;
+  output N16_OUT, n252_OUT, n219_OUT, n265_OUT, n263_OUT, X0_OUT, X34_OUT, clk1_OUT, clk2_OUT, N332_OUT, N334_OUT, X1061_OUT, 
+             N331_OUT, N333_OUT, n180_OUT;
+   
+  TSV_CELL TC_1 ( .UP (n180), .DN (n180_OUT));
+  TSV_CELL TC_2 ( .UP (N23), .DN (N23_IN));
+  TSV_CELL TC_3 ( .UP (N24), .DN (N24_IN));
+  TSV_CELL TC_4 ( .UP (n195), .DN (n195_IN));
+  TSV_CELL TC_5 ( .UP (n272), .DN (n272_IN));
+
+  TSV_CELL TC_6 ( .UP (X0), .DN (X0_IN));
+  TSV_CELL TC_7 ( .UP (X34), .DN (X34_IN));
+  TSV_CELL TC_8 ( .UP (clk1), .DN (clk1_IN));
+  TSV_CELL TC_9 ( .UP (clk2), .DN (clk2_IN));
+  TSV_CELL TC_10 ( .UP (N332), .DN (N332_IN));
+  TSV_CELL TC_11 ( .UP (N334), .DN (N334_IN));
+  TSV_CELL TC_12 ( .UP (X1061), .DN (X1061_OUT));
+  TSV_CELL TC_13 ( .UP (N331), .DN (N331_OUT));
+  TSV_CELL TC_14 ( .UP (N333), .DN (N333_OUT));
+
+  TSV_LAND TL_1 ( .UP (N16_OUT), .DN (N16));
+  TSV_LAND TL_2 ( .UP (n252_OUT), .DN (n252));
+  TSV_LAND TL_3 ( .UP (n219_OUT), .DN (n219));
+  TSV_LAND TL_4 ( .UP (n265_OUT), .DN (n265));
+  TSV_LAND TL_5 ( .UP (n263_OUT), .DN (n263));
+  TSV_LAND TL_6 ( .UP (n240_IN), .DN (n240));
+  
+  TSV_LAND TL_7 ( .UP (X0_OUT), .DN (X0));
+  TSV_LAND TL_8 ( .UP (X34_OUT), .DN (X34));
+  TSV_LAND TL_9 ( .UP (clk1_OUT), .DN (clk1));
+  TSV_LAND TL_10 ( .UP (clk2_OUT), .DN (clk2));
+  TSV_LAND TL_11 ( .UP (N332_OUT), .DN (N332));
+  TSV_LAND TL_12 ( .UP (N334_OUT), .DN (N334));
+  TSV_LAND TL_13 ( .UP (X1061_IN), .DN (X1061));
+  TSV_LAND TL_14 ( .UP (N331_IN), .DN (N331));
+  TSV_LAND TL_15 ( .UP (N333_IN), .DN (N333));
+
+  DFFX1 DFF5 ( .Q(N5), .D(N294), .CK(clk1) );
+  DFFX1 DFF6 ( .Q(N6), .D(N287), .CK(clk1) );
+  DFFX1 DFF7 ( .Q(N7), .D(N280), .CK(clk1) );
+  DFFX1 DFF8 ( .Q(N8), .D(N273), .CK(clk1) );
+  DFFX1 DFF16 ( .Q(N16), .D(N217), .CK(clk1) );
+  DFFX2 DFF17 ( .Q(N17), .D(N210), .CK(clk1) );
+  DFFX2 DFF18 ( .Q(N18), .D(N203), .CK(clk1) );
+  DFFX2 DFF19 ( .Q(N19), .D(N196), .CK(clk1) );
+  DFFX2 DFF20 ( .Q(N20), .D(N189), .CK(clk1) );
+  DFFX2 DFF21 ( .Q(N21), .D(N182), .CK(clk1) );
+  DFFX2 DFF22 ( .Q(N22), .D(N175), .CK(clk1) );
+  DFFX2 DFF29 ( .Q(N29), .D(N126), .CK(clk1) );
+  DFFX2 DFF30 ( .Q(N30), .D(N119), .CK(clk1) );
+  DFFX2 DFF31 ( .Q(N31), .D(N112), .CK(clk1) );
+  DFFX2 DFF32 ( .Q(N32), .D(N102), .CK(clk1) );
+
+  NOR2X1 U202 ( .A(N331), .B(n169), .Y(N102) );
+  XNOR2X2 U203 ( .A(N32), .B(X34), .Y(n169) );
+  NOR2X1 U204 ( .A(N332), .B(n170), .Y(N112) );
+  XOR2X1 U205 ( .A(n171), .B(N31), .Y(n170) );
+  MX2X1 U206 ( .S0(n174), .B(n173), .A(n172), .Y(N119) );
+  XNOR2X1 U207 ( .A(N333), .B(n173), .Y(n172) );
+  INVX1 U208 ( .A(N30), .Y(n173) );
+  MX2X1 U209 ( .S0(n177), .B(n176), .A(n175), .Y(N126) );
+  XNOR2X2 U210 ( .A(N334), .B(n176), .Y(n175) );
+  INVX2 U211 ( .A(N29), .Y(n176) );
+  MX2X1 U230 ( .S0(n198), .B(n197), .A(n196), .Y(N175) );
+  XNOR2X1 U231 ( .A(N333), .B(n197), .Y(n196) );
+  INVX1 U232 ( .A(N22), .Y(n197) );
+  MX2X1 U233 ( .S0(n201), .B(n200), .A(n199), .Y(N182) );
+  XNOR2X2 U234 ( .A(N334), .B(n200), .Y(n199) );
+  INVX1 U235 ( .A(N21), .Y(n200) );
+  MX2X1 U236 ( .S0(n204), .B(n203), .A(n202), .Y(N189) );
+  NOR2X1 U237 ( .A(N333), .B(n203), .Y(n202) );
+  INVX1 U238 ( .A(N20), .Y(n203) );
+  MX2X1 U239 ( .S0(n207), .B(n206), .A(n205), .Y(N196) );
+  NOR2X1 U240 ( .A(N334), .B(n206), .Y(n205) );
+  INVX2 U241 ( .A(N19), .Y(n206) );
+  MX2X2 U242 ( .S0(n210), .B(n209), .A(n208), .Y(N203) );
+  NOR2X2 U243 ( .A(N331), .B(n209), .Y(n208) );
+  INVX1 U244 ( .A(N18), .Y(n209) );
+  MX2X1 U245 ( .S0(n213), .B(n212), .A(n211), .Y(N210) );
+  NOR2X1 U246 ( .A(N332), .B(n212), .Y(n211) );
+  INVX1 U247 ( .A(N17), .Y(n212) );
+  MX2X1 U248 ( .S0(n216), .B(n215), .A(n214), .Y(N217) );
+  XOR2X1 U249 ( .A(N331), .B(n215), .Y(n214) );
+  INVX1 U250 ( .A(N16), .Y(n215) );
+  MX2X1 U272 ( .S0(n240), .B(n239), .A(n238), .Y(N273) );
+  NOR2X1 U273 ( .A(N331), .B(n239), .Y(n238) );
+  INVX1 U274 ( .A(N8), .Y(n239) );
+  MX2X1 U275 ( .S0(n243), .B(n242), .A(n241), .Y(N280) );
+  NOR2X1 U276 ( .A(N332), .B(n242), .Y(n241) );
+  INVX1 U277 ( .A(N7), .Y(n242) );
+  MX2X2 U278 ( .S0(n246), .B(n245), .A(n244), .Y(N287) );
+  NOR2X2 U279 ( .A(N333), .B(n245), .Y(n244) );
+  INVX2 U280 ( .A(N6), .Y(n245) );
+  MX2X2 U281 ( .S0(n249), .B(n248), .A(n247), .Y(N294) );
+  NOR2X2 U282 ( .A(N334), .B(n248), .Y(n247) );
+  INVX2 U283 ( .A(N5), .Y(n248) );
+  AND2X2 U298 ( .A(N5), .B(n249), .Y(n252) );
+  AND2X2 U299 ( .A(N6), .B(n246), .Y(n249) );
+  AND2X2 U300 ( .A(N7), .B(n243), .Y(n246) );
+  AND2X1 U301 ( .A(N8), .B(n240), .Y(n243) );
+  AND2X1 U309 ( .A(N16), .B(n216), .Y(n219) );
+  AND2X1 U310 ( .A(N17), .B(n213), .Y(n216) );
+  AND2X1 U311 ( .A(N18), .B(n210), .Y(n213) );
+  AND2X1 U312 ( .A(N19), .B(n207), .Y(n210) );
+  AND2X1 U313 ( .A(N20), .B(n204), .Y(n207) );
+  AND2X1 U314 ( .A(N21), .B(n201), .Y(n204) );
+  AND2X1 U315 ( .A(N22), .B(n198), .Y(n201) );
+  AND2X1 U316 ( .A(N23), .B(n195), .Y(n198) );
+  AND2X2 U322 ( .A(N29), .B(n177), .Y(n180) );
+  AND2X2 U323 ( .A(N30), .B(n174), .Y(n177) );
+  NOR3X2 U324 ( .A(n262), .B(N331), .C(n171), .Y(n174) );
+  NAND2X2 U325 ( .A(N32), .B(X34), .Y(n171) );
+  INVX1 U326 ( .A(N31), .Y(n262) );
+  NAND4X1 U333 ( .A(N5), .B(N6), .C(N7), .D(N8), .Y(n265) );
+  OR4X2 U334 ( .A(n269), .B(n270), .C(n271), .D(n272), .Y(n263) );
+  NAND4X2 U336 ( .A(N29), .B(N30), .C(N31), .D(N32), .Y(n271) );
+  NAND4X2 U337 ( .A(N17), .B(N18), .C(N19), .D(N20), .Y(n270) );
+  NAND4X2 U338 ( .A(N21), .B(N22), .C(N23), .D(N24), .Y(n269) );
+endmodule
