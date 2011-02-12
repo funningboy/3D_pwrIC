@@ -14,6 +14,8 @@ sub new {
                power_ratio        => '0.8',
                connect_ratio      => '0',
                target_area        => '0',
+               cur_run_time       => '0',
+               max_run_time       => '10000',
                cons_power_density => {},
                cons_feedback      => {},
                power_density_list => {},
@@ -22,11 +24,11 @@ sub new {
                fit_list           => {},
                best_list          => [],
                ready_list         => [],
-               GA_alg_list        => { ini_population => '1',
+               GA_alg_list        => { ini_population => '100',
                                        mutation_rate  => '0.5',
                                        min_fitness    => '0.7',
-                                       max_population => '500',
-                                       end_generation => '1',
+                                       max_population => '200',
+                                       end_generation => '30',
                                        cur_generation => '0',
                                        multi_parent   => '3',
  
@@ -392,8 +394,8 @@ sub run_cluster_constrain {
 
       my $top_layer = 0;
       foreach my $layer (sort keys %{$self->{fit_list}}){
-              my $power = $self->{fit_list}->{$layer}->{power};
-              my $area  = $self->{fit_list}->{$layer}->{area};
+              my $power = $self->{fit_list}->{$layer}->{power} || 0;
+              my $area  = $self->{fit_list}->{$layer}->{area}  || 0;
  
               # @ TSV P/G VCC VSS 
               my $core_i = ($core_voltage!=0)? $power / $core_voltage  : die "div 0\n";
@@ -401,9 +403,12 @@ sub run_cluster_constrain {
                  $pg_num = ($pg_num > int($pg_num))? int($pg_num)+1 : int($pg_num);
 
                  #????
- 
-                 if( $area < 0.5 * $self->{target_area} ||
-                     $area > 2.5 * $self->{target_area} ){ return -1; }
+                 if( $self->{cur_run_time} > $self->{max_run_time} ){
+                    if( $area < 0 ) { return -1; }
+                 } else { 
+                    if( $area < 0.5 * $self->{target_area} ||
+                        $area > 2.5 * $self->{target_area} ){ return -1; }
+                 }
  
               if( defined($cons_density_list->{final}->{$layer}) ){
                   my $density = $power / $area * 100;
@@ -766,9 +771,11 @@ for(my $i=0; $i<$ini_population; $i++){
   $end =$self->run_cluster_constrain();
 
      if($end!=-1){
-        $self->run_cluster_set_gene_list();                
+        $self->run_cluster_set_gene_list();    
+        $self->{cur_run_time} =0;         
      }
        $self->run_cluster_clear();
+       $self->{cur_run_time}++; 
    }
  }
 

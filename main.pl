@@ -13,11 +13,51 @@ use tCAD::ExpRpt;
 use strict;
 use Data::Dumper;
 
+sub get_usage {
+  print STDOUT '
 
+#=============================================#
+# 3D IC Design Partitioning with Power Consideration 
+# author : sean chen
+# mail : funningboy@gmail.com
+# license: FBS
+# publish: 2011/02/12 v1
+# project reference : https://sites.google.com/site/funningboy/verilog/3D_IC_Partition_Algorithm_with_Power_Consideration_991224_4rd.pdf?attredirects=0&d=1 
+#=============================================#
 
+<USAGE>
 
-my $root_path  = './demo/demo_test/';
-my $bench_path = $root_path.'./design_bench_1_200.info';
+-root [ design_file_loc ]
+-library [ library_file ]
+
+</USAGE>
+
+ex: perl main.pl -root ./demo/demo_test/ \
+                 -library ./design_bench_1_200.info \
+
+ps: you can modify the GA constrains in IC3DiGA.pm
+ex: ini_population = 50,
+    mutation_rate  = 0.5,
+    min_fitness    = 0.7,
+    max_population = 200,
+';
+die "\n";
+}
+
+if(!@ARGV){ get_usage(); }
+
+my $root_path;
+my $bench_path= $root_path;
+
+while(@ARGV){
+  $_ = shift @ARGV;
+
+    if( /-root/    ){ $root_path  = shift @ARGV; }
+ elsif( /-library/ ){ $bench_path = shift @ARGV; }
+ else { get_usage(); }
+}
+
+$bench_path = $root_path.$bench_path;
 
 #============================================
 # parsaer bench info
